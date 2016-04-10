@@ -2,6 +2,7 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+    ofBackground(0);
     model.loadModel("dragon.obj");
     modelScale = model.getModelMatrix().getScale();
     
@@ -17,6 +18,7 @@ void ofApp::setup(){
     gui.add(baseColor.set("baseColor", ofColor(255, 255, 255, 255), ofColor(0, 0, 0, 0), ofColor(255, 255, 255, 255)));
     gui.add(numLights.set("numLights", 3, 0, MAX_LIGHTS));
     numLights.addListener(this, &ofApp::resizeShadowMap);
+    gui.add(shadowOffset.set("shadowOffset", ofFloatColor(0.05, 0.05, 0.05, 1.0), ofFloatColor(0.0, 0.0, 0.0, 1.0), ofFloatColor(1.0, 1.0, 1.0, 1.0)));
     
     depthMapRes = 1024;
     setShadowMap(numLights);
@@ -100,7 +102,7 @@ void ofApp::update(){
         pbrLight[i].setFarClip(farClip[i]);
         
         float rad = ofGetElapsedTimef() + TWO_PI * i / fmaxf(numLights, 1);
-        pbrLight[i].setPosition(ofVec3f(1500.0 * cos(rad), 500.0, 1500.0 * sin(rad)));
+        pbrLight[i].setPosition(ofVec3f(1500.0 * cos(rad), 1500.0, 1500.0 * sin(rad)));
         pbrLight[i].lookAt(ofVec3f(0, 0, 0));
         
         lightTypeName[i].set(lightTypeNames[lightType[i].get()]);
@@ -167,6 +169,7 @@ void ofApp::draw(){
     renderingShader.setUniform2f("depthMapAtrasRes", depthMapAtrasWidth, depthMapAtrasHeight);
     renderingShader.setUniform2f("depthTexMag", depthTexMag);
     renderingShader.setUniform1f("roughness", roughness);
+    renderingShader.setUniform4f("shadowOffset", shadowOffset);
     for(int i=0; i<numLights; i++){
         string index = ofToString(i);
         renderingShader.setUniform1i("lights["+ index +"].isEnabled", pbrLight[i].getIsEnabled());

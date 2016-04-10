@@ -55,6 +55,7 @@ class ofApp : public ofBaseApp{
     ofParameter<float> roughness;
     ofParameter<ofColor> baseColor;
     ofParameter<int> numLights;
+    ofParameter<ofFloatColor> shadowOffset;
     
     ofParameter<bool> isEnabled[MAX_LIGHTS];
     ofParameter<int> lightType[MAX_LIGHTS], shadowType[MAX_LIGHTS];

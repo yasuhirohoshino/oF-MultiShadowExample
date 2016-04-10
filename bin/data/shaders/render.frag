@@ -25,6 +25,7 @@ uniform int numLights;
 uniform vec2 depthMapAtrasRes;
 uniform vec2 depthTexMag;
 uniform float roughness;
+uniform vec4 shadowOffset;
 
 in vec4 colorVarying;
 in vec2 texCoordVarying;
@@ -157,7 +158,7 @@ vec3 CalcLightAndShadow(vec4 v_positionVarying, vec3 v_normalVarying, vec3 color
 }
 
 void main (void) {
-    vec3 color = vec3(0.05);
+    vec3 color = vec3(shadowOffset.rgb);
     vec3 light = vec3(0.0);
     float shadow = 0.0;
     for(int i=0; i<numLights; i++){

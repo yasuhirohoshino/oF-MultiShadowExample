@@ -1,5 +1,7 @@
 # oF-MultiShadowExample
 
+![sample image](multishadow.png)
+
 Multi light & shadow example for openFrameworks.
 
 By Yasuhiro Hoshino
